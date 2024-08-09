@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./dags:/mnt/airflow/dags
+      - ./kaggle.json:/mnt/airflow/.config/kaggle/kaggle.json
+    ports:
+      - "8080:8080"
+      - "8888:8888"
+    entrypoint: ["/mnt/airflow/entrypoint.sh"]
+

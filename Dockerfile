@@ -25,7 +25,6 @@ RUN pip install --upgrade pip && \
 
 # Copy the Airflow scripts
 COPY ./dags ${AIRFLOW_HOME}/dags/
-COPY ./plugins ${AIRFLOW_HOME}/plugins/
 COPY ./kaggle.json ${AIRFLOW_HOME}/.config/kaggle/
 COPY ./entrypoint.sh ${AIRFLOW_HOME}/entrypoint.sh
 # Ensure the entrypoint script is executable
@@ -37,6 +36,5 @@ RUN chown -R airflow:airflow ${AIRFLOW_HOME}
 USER airflow
 
 EXPOSE 8080
-EXPOSE 8888
 
 ENTRYPOINT [ "/mnt/airflow/entrypoint.sh" ]

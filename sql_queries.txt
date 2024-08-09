@@ -1,0 +1,117 @@
+CREATE TABLE bridge_athlete_team (
+    team_code VARCHAR(255),
+    athlete_code VARCHAR(255),
+    PRIMARY KEY (team_code, athlete_code),
+    FOREIGN KEY (team_code) REFERENCES teams(code),
+    FOREIGN KEY (athlete_code) REFERENCES athletes(code)
+);
+
+
+*****************************************************************
+
+CREATE TABLE athletes (
+    code VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    name_short VARCHAR(255),
+    name_tv VARCHAR(255),
+    gender VARCHAR(50),
+    role VARCHAR(255),
+    country_code VARCHAR(10),
+    country VARCHAR(255),
+    country_full VARCHAR(255),
+    nationality VARCHAR(255),
+    nationality_full VARCHAR(255),
+    nationality_code VARCHAR(10),
+    height FLOAT,
+    weight FLOAT,
+    disciplines VARCHAR(255),
+    events VARCHAR(255),
+    birth_date DATE
+);
+
+*****************************************************************
+
+CREATE TABLE teams (
+    code VARCHAR(255) PRIMARY KEY,
+    team VARCHAR(255),
+    team_gender VARCHAR(255),
+    country VARCHAR(255),
+    country_code VARCHAR(10),
+    discipline VARCHAR(255),
+    disciplines_code VARCHAR(10),
+    events VARCHAR(255),
+    num_athletes INT
+);
+
+************************************************************************
+
+CREATE TABLE venue (
+    venue VARCHAR(255) PRIMARY KEY,
+    sports VARCHAR(255),
+    tag VARCHAR(255)
+);
+
+************************************************************************
+
+CREATE TABLE events (
+    event VARCHAR(255) NOT NULL,
+    tag VARCHAR(255),
+    sport VARCHAR(255),
+    sport_code VARCHAR(50) NOT NULL,
+    PRIMARY KEY (event, sport_code)
+);
+
+
+************************************************************************
+
+INSERT INTO medallists (
+    medal_date, medal_type, medal_code, name, gender, country, country_code, nationality,
+    team_gender, discipline, event, event_type, birth_date, athlete_code
+) VALUES (
+    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+) ON DUPLICATE KEY UPDATE
+    medal_date = VALUES(medal_date),
+    medal_type = VALUES(medal_type),
+    medal_code = VALUES(medal_code),
+    name = VALUES(name),
+    gender = VALUES(gender),
+    country = VALUES(country),
+    country_code = VALUES(country_code),
+    nationality = VALUES(nationality),
+    team_gender = VALUES(team_gender),
+    discipline = VALUES(discipline),
+    event_type = VALUES(event_type),
+    birth_date = VALUES(birth_date),
+    athlete_code = VALUES(athlete_code);
+
+************************************************************************
+
+
+CREATE TABLE events (
+    event VARCHAR(255) NOT NULL,
+    tag VARCHAR(255),
+    sport VARCHAR(255),
+    sport_code VARCHAR(50) NOT NULL,
+    PRIMARY KEY (event, sport_code)
+);
+
+************************************************************************
+
+CREATE TABLE schedules (
+    start_date DATE,
+    end_date DATE,
+    day VARCHAR(50),
+    status VARCHAR(50),
+    discipline VARCHAR(255),
+    discipline_code VARCHAR(50),
+    event VARCHAR(255),
+    event_medal VARCHAR(50),
+    phase VARCHAR(50),
+    gender VARCHAR(50),
+    event_type VARCHAR(50),
+    venue VARCHAR(255),
+    venue_code VARCHAR(50),
+    location_description VARCHAR(255),
+    location_code VARCHAR(50),
+    url VARCHAR(255)
+);
